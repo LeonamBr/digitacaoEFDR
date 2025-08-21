@@ -1,8 +1,8 @@
-[submodule "extern/SDL"]
-	path = extern/SDL
+[submodule "external/SDL"]
+	path = external/SDL
 	url = https://github.com/libsdl-org/SDL
 	branch = SDL2
-[submodule "extern/SDL_ttf"]
-	path = extern/SDL_ttf
+[submodule "external/SDL_ttf"]
+	path = external/SDL_ttf
 	url = https://github.com/libsdl-org/SDL_ttf
 	branch = SDL2
