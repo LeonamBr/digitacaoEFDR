@@ -2,19 +2,41 @@
 #define LESSON_ENGINE_H
 
 #include <string>
+#include <vector>
+#include <functional>
+#include <cstdint>
 
 class LessonEngine {
-    public:
-        void LoadSequence(const std::string& seq);
-        bool TryConsume(const std::string& ch); // retorna true quando o char esperado é acertado
-        bool Done() const;
+public:
+    LessonEngine() = default;
 
-        std::string Current() const; // caractere atual
-        std::string Remaining() const; // sequência restante (inclui o atual)
+    void SetSequenceUTF8(const char* utf8);
+    void PushText(const char* utf8); // recebe o glifo digitado (ou uma string com 1 codepoint)
+    void ResetTyped();
 
-    private:
-        std::string m_seq; // em UTF-8 simples (ex.: "asdf jklç")
-        size_t m_index = 0;
+    // leitura de estado
+    std::string Sequence() const; // sequência alvo completa
+    std::string Typed() const;    // o que foi digitado até agora
+    std::string CurrentGlyph() const;    // próximo glifo esperado (ou "")
+    float ProgressPercent() const;       // 0..100
+    float Accuracy() const;              // 0..100
+    bool Finished() const;
+    void SkipCurrent();
+
+    // alias p/ compatibilidade com chamadas antigas
+    std::string NextGlyph() const { return CurrentGlyph(); }
+
+    // regras
+    void SetCaseSensitive(bool v) { m_caseSensitive = v; }
+
+private:
+    static void utf8_for_each(const char* s, const std::function<void(const std::string&)>& fn);
+
+    std::vector<std::string> m_target; // tokens (codepoints) da sequência
+    std::vector<std::string> m_typed;  // tokens digitados corretos
+    int m_errors = 0;
+    int m_keystrokes = 0;
+    bool m_caseSensitive = true;
 };
 
-#endif
+#endif // LESSON_ENGINE_H

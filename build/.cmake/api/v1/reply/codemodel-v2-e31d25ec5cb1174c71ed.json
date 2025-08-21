@@ -1,0 +1,210 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "external/SDL",
+					"jsonFile" : "directory-external.SDL-Debug-d0edf57735263782969b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "external/SDL",
+					"targetIndexes" : 
+					[
+						0,
+						2,
+						5,
+						6
+					]
+				},
+				{
+					"build" : "external/SDL_ttf",
+					"childIndexes" : 
+					[
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.SDL_ttf-Debug-56cc262b00c024f5a838.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "external/SDL_ttf",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "external/SDL_ttf/external/freetype",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.SDL_ttf.external.freetype-Debug-1c5484f71085e27c39ae.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 3,
+					"source" : "external/SDL_ttf/external/freetype",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "curso_digitacao",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "SDL2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						2,
+						5,
+						6
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						3
+					],
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "SDL2_ttf",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "freetype",
+					"parentIndex" : 2,
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2-static::@325f9cd2ad4d12a63863",
+					"jsonFile" : "target-SDL2-static-Debug-808e8473e0cf17fdd36d.json",
+					"name" : "SDL2-static",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "SDL2_ttf::@41951aff4e05bf6c62d6",
+					"jsonFile" : "target-SDL2_ttf-Debug-ac2ad13c656070f66da4.json",
+					"name" : "SDL2_ttf",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2main::@325f9cd2ad4d12a63863",
+					"jsonFile" : "target-SDL2main-Debug-e81c3f2188597a10755f.json",
+					"name" : "SDL2main",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "curso_digitacao::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-curso_digitacao-Debug-3537549dc53fdbaa88ca.json",
+					"name" : "curso_digitacao",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "freetype::@cd5590d6d18e37c36d57",
+					"jsonFile" : "target-freetype-Debug-24d35400c9e6aa3152f3.json",
+					"name" : "freetype",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "sdl_headers_copy::@325f9cd2ad4d12a63863",
+					"jsonFile" : "target-sdl_headers_copy-Debug-57aa9653cff4bd8acf73.json",
+					"name" : "sdl_headers_copy",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@325f9cd2ad4d12a63863",
+					"jsonFile" : "target-uninstall-Debug-2f80ed8a330c8fa8457b.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/digitacaoEFDR/build",
+		"source" : "D:/digitacaoEFDR"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}

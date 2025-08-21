@@ -2,7 +2,7 @@
 #define SDL_REVISION_NUMBER 0
 
 #ifdef SDL_VENDOR_INFO
-#define SDL_REVISION "SDL-2.33.0-no-vcs (" SDL_VENDOR_INFO ")"
+#define SDL_REVISION "SDL-release-2.32.0-89-g1f21aae24 (" SDL_VENDOR_INFO ")"
 #else
-#define SDL_REVISION "SDL-2.33.0-no-vcs"
+#define SDL_REVISION "SDL-release-2.32.0-89-g1f21aae24"
 #endif
