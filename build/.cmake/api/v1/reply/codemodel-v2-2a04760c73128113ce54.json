@@ -9,19 +9,20 @@
 					"childIndexes" : 
 					[
 						1,
-						2
+						2,
+						4
 					],
 					"hasInstallRule" : true,
 					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.22"
+						"string" : "3.20"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						3
+						5
 					]
 				},
 				{
@@ -38,8 +39,9 @@
 					[
 						0,
 						2,
-						5,
-						6
+						4,
+						7,
+						8
 					]
 				},
 				{
@@ -59,13 +61,13 @@
 					"source" : "external/SDL_ttf",
 					"targetIndexes" : 
 					[
-						1
+						3
 					]
 				},
 				{
 					"build" : "external/SDL_ttf/external/freetype",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-external.SDL_ttf.external.freetype-Debug-1c5484f71085e27c39ae.json",
+					"jsonFile" : "directory-external.SDL_ttf.external.freetype-Debug-5402787972c4a86e8ea8.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.0"
@@ -75,7 +77,22 @@
 					"source" : "external/SDL_ttf/external/freetype",
 					"targetIndexes" : 
 					[
-						4
+						6
+					]
+				},
+				{
+					"build" : "external/SDL_image",
+					"jsonFile" : "directory-external.SDL_image-Debug-f56c4a04f87b6b717aa6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "external/SDL_image",
+					"targetIndexes" : 
+					[
+						1
 					]
 				}
 			],
@@ -86,7 +103,8 @@
 					"childIndexes" : 
 					[
 						1,
-						2
+						2,
+						4
 					],
 					"directoryIndexes" : 
 					[
@@ -95,7 +113,7 @@
 					"name" : "curso_digitacao",
 					"targetIndexes" : 
 					[
-						3
+						5
 					]
 				},
 				{
@@ -109,8 +127,9 @@
 					[
 						0,
 						2,
-						5,
-						6
+						4,
+						7,
+						8
 					]
 				},
 				{
@@ -126,7 +145,7 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						1
+						3
 					]
 				},
 				{
@@ -138,7 +157,19 @@
 					"parentIndex" : 2,
 					"targetIndexes" : 
 					[
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
 						4
+					],
+					"name" : "SDL2_image",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
 					]
 				}
 			],
@@ -147,35 +178,49 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "SDL2-static::@325f9cd2ad4d12a63863",
-					"jsonFile" : "target-SDL2-static-Debug-808e8473e0cf17fdd36d.json",
+					"jsonFile" : "target-SDL2-static-Debug-48c1744d148975f9f668.json",
 					"name" : "SDL2-static",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "SDL2_image::@b3bda19ab55850be12b4",
+					"jsonFile" : "target-SDL2_image-Debug-4153d5d24fdf41bdfe47.json",
+					"name" : "SDL2_image",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2_test::@325f9cd2ad4d12a63863",
+					"jsonFile" : "target-SDL2_test-Debug-439f38489ff43ea71a4e.json",
+					"name" : "SDL2_test",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "SDL2_ttf::@41951aff4e05bf6c62d6",
-					"jsonFile" : "target-SDL2_ttf-Debug-ac2ad13c656070f66da4.json",
+					"jsonFile" : "target-SDL2_ttf-Debug-9bed980082ab59e46243.json",
 					"name" : "SDL2_ttf",
 					"projectIndex" : 2
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "SDL2main::@325f9cd2ad4d12a63863",
-					"jsonFile" : "target-SDL2main-Debug-e81c3f2188597a10755f.json",
+					"jsonFile" : "target-SDL2main-Debug-40cdcc5aebb51e364b67.json",
 					"name" : "SDL2main",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "curso_digitacao::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-curso_digitacao-Debug-3537549dc53fdbaa88ca.json",
+					"jsonFile" : "target-curso_digitacao-Debug-8f2a9f6ee908153b77c7.json",
 					"name" : "curso_digitacao",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 3,
 					"id" : "freetype::@cd5590d6d18e37c36d57",
-					"jsonFile" : "target-freetype-Debug-24d35400c9e6aa3152f3.json",
+					"jsonFile" : "target-freetype-Debug-86086566f37c9b188859.json",
 					"name" : "freetype",
 					"projectIndex" : 3
 				},

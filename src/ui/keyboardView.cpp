@@ -13,7 +13,18 @@ static SDL_Texture* RenderText(SDL_Renderer* r, TTF_Font* f,
     return t;
 }
 
+void KeyboardView::Clear() {
+    m_flashes.clear();
+    m_now = 0.0;
+    m_shiftDown = false;
+}
+
 void KeyboardView::Update(double nowSeconds) {
+
+    if (nowSeconds < m_now) {
+        m_flashes.clear();
+    }
+
     m_now = nowSeconds;
     // limpa flashes expirados (lazy)
     for (auto it = m_flashes.begin(); it != m_flashes.end(); ) {
@@ -102,25 +113,36 @@ void KeyboardView::Draw(SDL_Renderer* r, TTF_Font* font,
                         const std::string& highlightGlyph,
                         int x, int y, int totalWidth, int keyH)
 {
+    const int gap = 8; // espaço entre teclas (px)
     const auto& rows = LayoutABNT2();
     const std::string hot = Normalize(highlightGlyph);
 
-    // pulso para a tecla-alvo (0.98..1.04, ~8Hz)
-    const float amp = 0.04f;
-    const float w   = 8.0f; // frequência em Hz aprox.
-    const float pulseScale = hot.empty() ? 1.0f : (1.0f + amp * std::sin(2.0f * 3.1415926f * w * float(m_now)));
+    // pulso leve na tecla-alvo
+    const float amp = 0.04f, w = 6.0f;
+    const float pulseScale = hot.empty() ? 1.0f
+        : (1.0f + amp * std::sin(2.0f * 3.1415926f * w * float(m_now)));
 
     int curY = y;
     for (const auto& row : rows) {
+        // soma de larguras relativas + gaps reais
         float wsum = 0.f; for (auto& k: row) wsum += k.w;
-        const float unit = float(totalWidth) / wsum;
+        const int gapsTotal = gap * (int(row.size()) - 1);
+
+        // largura real disponível só para as teclas (sem gaps)
+        const float unit = float(totalWidth - gapsTotal) / wsum;
 
         int curX = x;
-        for (const auto& k : row) {
-            SDL_Rect rc{ curX, curY, int(k.w*unit - 6), keyH };
+        for (size_t i = 0; i < row.size(); ++i) {
+            const auto& k = row[i];
+
+            // garante que a última tecla feche a linha até a borda direita
+            int wKey = (i + 1 == row.size())
+                ? (x + totalWidth - curX)
+                : int(std::round(k.w * unit));
+
+            SDL_Rect rc{ curX, curY, std::max(1, wKey), keyH };
 
             Mode mode = Mode::Idle;
-            // prioridade: flashes (Hit/Miss) sobre Target
             if (auto it = m_flashes.find(k.label); it != m_flashes.end()) {
                 mode = it->second.type;
             } else if (!hot.empty() && k.label == hot) {
@@ -129,8 +151,9 @@ void KeyboardView::Draw(SDL_Renderer* r, TTF_Font* font,
 
             const float s = (mode == Mode::Target) ? pulseScale : 1.0f;
             DrawKey(r, font, k, rc, mode, s);
-            curX += int(k.w * unit);
+
+            curX += wKey + gap;
         }
-        curY += keyH + 8;
+        curY += keyH + gap;
     }
 }

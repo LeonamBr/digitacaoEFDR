@@ -25,6 +25,8 @@ public:
     // Maiúsculas visuais quando segurando shift
     void SetShiftHeld(bool v) { m_shiftDown = v; }
 
+    void Clear();
+
 private:
     struct Key { std::string label; float w; }; // w = largura relativa
     using Row = std::vector<Key>;

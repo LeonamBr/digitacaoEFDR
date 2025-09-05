@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "external/SDL_ttf/external/freetype/libfreetyped.a"
+			"path" : "lib/libfreetyped.a"
 		}
 	],
 	"backtrace" : 1,
@@ -13,12 +13,15 @@
 		[
 			"add_library",
 			"install",
+			"add_compile_options",
 			"target_compile_definitions",
+			"add_definitions",
 			"target_include_directories"
 		],
 		"files" : 
 		[
-			"external/SDL_ttf/external/freetype/CMakeLists.txt"
+			"external/SDL_ttf/external/freetype/CMakeLists.txt",
+			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -38,25 +41,40 @@
 				"parent" : 0
 			},
 			{
+				"file" : 1
+			},
+			{
 				"command" : 2,
+				"file" : 1,
+				"line" : 24,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
 				"file" : 0,
 				"line" : 482,
 				"parent" : 0
 			},
 			{
-				"command" : 2,
+				"command" : 3,
 				"file" : 0,
 				"line" : 486,
 				"parent" : 0
 			},
 			{
-				"command" : 2,
+				"command" : 4,
+				"file" : 1,
+				"line" : 29,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
 				"file" : 0,
 				"line" : 489,
 				"parent" : 0
 			},
 			{
-				"command" : 3,
+				"command" : 5,
 				"file" : 0,
 				"line" : 504,
 				"parent" : 0
@@ -70,39 +88,59 @@
 			[
 				{
 					"fragment" : "-g -fvisibility=hidden"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wpedantic"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wno-unused-parameter"
 				}
 			],
 			"defines" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 5,
 					"define" : "FT2_BUILD_LIBRARY"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 6,
 					"define" : "FT_PUBLIC_FUNCTION_ATTRIBUTE="
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 7,
+					"define" : "NOMINMAX"
+				},
+				{
+					"backtrace" : 8,
 					"define" : "_CRT_NONSTDC_NO_WARNINGS"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 8,
 					"define" : "_CRT_SECURE_NO_WARNINGS"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 6,
+					"backtrace" : 9,
 					"path" : "D:/digitacaoEFDR/build/external/SDL_ttf/external/freetype/include"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 9,
 					"path" : "D:/digitacaoEFDR/external/SDL_ttf/external/freetype/include"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 9,
 					"path" : "D:/digitacaoEFDR/build/external/SDL_ttf/external/freetype/include/freetype/config"
 				}
 			],
@@ -157,34 +195,38 @@
 			"defines" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 5,
 					"define" : "FT2_BUILD_LIBRARY"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 6,
 					"define" : "FT_PUBLIC_FUNCTION_ATTRIBUTE="
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 7,
+					"define" : "NOMINMAX"
+				},
+				{
+					"backtrace" : 8,
 					"define" : "_CRT_NONSTDC_NO_WARNINGS"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 8,
 					"define" : "_CRT_SECURE_NO_WARNINGS"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 6,
+					"backtrace" : 9,
 					"path" : "D:/digitacaoEFDR/build/external/SDL_ttf/external/freetype/include"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 9,
 					"path" : "D:/digitacaoEFDR/external/SDL_ttf/external/freetype/include"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 9,
 					"path" : "D:/digitacaoEFDR/build/external/SDL_ttf/external/freetype/include/freetype/config"
 				}
 			],

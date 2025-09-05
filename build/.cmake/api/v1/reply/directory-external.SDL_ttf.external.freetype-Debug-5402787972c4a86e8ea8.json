@@ -94,10 +94,10 @@
 			"destination" : "lib",
 			"paths" : 
 			[
-				"external/SDL_ttf/external/freetype/libfreetyped.a"
+				"lib/libfreetyped.a"
 			],
 			"targetId" : "freetype::@cd5590d6d18e37c36d57",
-			"targetIndex" : 4,
+			"targetIndex" : 6,
 			"type" : "target"
 		},
 		{
@@ -109,7 +109,7 @@
 			[
 				{
 					"id" : "freetype::@cd5590d6d18e37c36d57",
-					"index" : 4
+					"index" : 6
 				},
 				{
 					"id" : "freetype-interface::@cd5590d6d18e37c36d57",

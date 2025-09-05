@@ -10,5 +10,5 @@ Description: Simple DirectMedia Layer is a cross-platform multimedia library des
 Version: 2.33.0
 Requires.private: 
 Conflicts:
-Libs: -L${libdir}   -lmingw32 -mwindows -lSDL2main -lSDL2     -lm -lkernel32 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lversion -luuid -ladvapi32 -lsetupapi -lshell32
+Libs: -L${libdir}   -lmingw32 -mwindows -lSDL2main -lSDL2     -lm -lkernel32 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lversion -luuid -ladvapi32 -lsetupapi -lshell32 -ldinput8
 Cflags: -I${includedir} -I${includedir}/SDL2  -Dmain=SDL_main

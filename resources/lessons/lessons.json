@@ -1,0 +1,7 @@
+[
+  { "title": "Home row - esquerda",  "target": "asdf" },
+  { "title": "Home row - direita",   "target": "jklç" },
+  { "title": "Combinações básicas",  "target": "asdf jklç asdf jklç" },
+  { "title": "Frutas",               "target": "maçã banana uva pêra" },
+  { "title": "Maiúsculas",           "target": "ASDF JKLÇ" }
+]

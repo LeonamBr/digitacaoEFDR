@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "external/SDL_ttf/libSDL2_ttfd.a"
+			"path" : "lib/libSDL2_ttfd.a"
 		}
 	],
 	"backtrace" : 1,
@@ -13,12 +13,15 @@
 		[
 			"add_library",
 			"target_link_libraries",
+			"add_compile_options",
 			"target_compile_definitions",
+			"add_definitions",
 			"target_include_directories"
 		],
 		"files" : 
 		[
-			"external/SDL_ttf/CMakeLists.txt"
+			"external/SDL_ttf/CMakeLists.txt",
+			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -44,13 +47,28 @@
 				"parent" : 0
 			},
 			{
+				"file" : 1
+			},
+			{
 				"command" : 2,
+				"file" : 1,
+				"line" : 24,
+				"parent" : 4
+			},
+			{
+				"command" : 3,
 				"file" : 0,
 				"line" : 103,
 				"parent" : 0
 			},
 			{
-				"command" : 3,
+				"command" : 4,
+				"file" : 1,
+				"line" : 29,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
 				"file" : 0,
 				"line" : 99,
 				"parent" : 0
@@ -64,31 +82,51 @@
 			[
 				{
 					"fragment" : "-g -fvisibility=hidden"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wpedantic"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-unused-parameter"
 				}
 			],
 			"defines" : 
 			[
 				{
-					"backtrace" : 4,
+					"backtrace" : 6,
 					"define" : "BUILD_SDL"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 7,
+					"define" : "NOMINMAX"
+				},
+				{
+					"backtrace" : 6,
 					"define" : "SDL_BUILD_MAJOR_VERSION=2"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 6,
 					"define" : "SDL_BUILD_MICRO_VERSION=0"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 6,
 					"define" : "SDL_BUILD_MINOR_VERSION=25"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 5,
+					"backtrace" : 8,
 					"path" : "D:/digitacaoEFDR/external/SDL_ttf"
 				},
 				{

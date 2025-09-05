@@ -1,79 +1,104 @@
-#include "LessonEngine.h"
+#include "core/LessonEngine.h"
+#include <functional>
 #include <algorithm>
-#include <cctype>
 
-// Itera codepoints de uma string UTF-8 e chama fn para cada token (std::string)
+static inline bool is_ascii_lower(char c){ return (c>='a' && c<='z'); }
+static inline bool is_ascii_upper(char c){ return (c>='A' && c<='Z'); }
+static inline char to_ascii_lower(char c){
+    return is_ascii_upper(c) ? char(c - 'A' + 'a') : c;
+}
+
+std::string LessonEngine::first_utf8_cp(const char* s) {
+    if (!s || !*s) return {};
+    const unsigned char c0 = (unsigned char)s[0];
+    int len = 1;
+    if      ((c0 & 0x80) == 0x00) len = 1;
+    else if ((c0 & 0xE0) == 0xC0) len = 2;
+    else if ((c0 & 0xF0) == 0xE0) len = 3;
+    else if ((c0 & 0xF8) == 0xF0) len = 4;
+    else return {};
+    return std::string(s, s + len);
+}
+
 void LessonEngine::utf8_for_each(const char* s, const std::function<void(const std::string&)>& fn) {
     if (!s) return;
-    const unsigned char* p = (const unsigned char*)s;
+    const char* p = s;
     while (*p) {
-        size_t len = 1;
-        if      ((*p & 0x80) == 0x00) len = 1;
-        else if ((*p & 0xE0) == 0xC0) len = 2;
-        else if ((*p & 0xF0) == 0xE0) len = 3;
-        else if ((*p & 0xF8) == 0xF0) len = 4;
-        fn(std::string((const char*)p, (const char*)p + len));
-        p += len;
+        const std::string tok = first_utf8_cp(p);
+        if (tok.empty()) break;
+        fn(tok);
+        p += tok.size();
     }
+}
+
+bool LessonEngine::equal_token(const std::string& a, const std::string& b) const {
+    if (m_caseSensitive) return a == b;
+    // case-insensitive leve só para ASCII (A<->a). UTF-8 fica “as-is”.
+    if (a.size() == 1 && b.size() == 1) {
+        return to_ascii_lower(a[0]) == to_ascii_lower(b[0]);
+    }
+    return a == b;
 }
 
 void LessonEngine::SetSequenceUTF8(const char* utf8) {
     m_target.clear();
     m_typed.clear();
-    m_errors = 0;
     m_keystrokes = 0;
+    m_errors     = 0;
+    m_finished   = false;
 
     utf8_for_each(utf8, [&](const std::string& tok){
         m_target.push_back(tok);
     });
+
+    // sequência vazia => termina de cara
+    if (m_target.empty()) m_finished = true;
 }
 
-void LessonEngine::ResetTyped() {
+void LessonEngine::Reset() {
+    // mantém m_target, mas zera progresso
     m_typed.clear();
-    m_errors = 0;
     m_keystrokes = 0;
+    m_errors     = 0;
+    m_finished   = m_target.empty();
 }
 
-static inline char lower_ascii(char c) {
-    if (c >= 'A' && c <= 'Z') return char(c - 'A' + 'a');
-    return c;
+std::string LessonEngine::CurrentGlyph() const {
+    if (m_finished) return {};
+    if (m_typed.size() >= m_target.size()) return {};
+    return m_target[m_typed.size()];
 }
 
-static std::string lower_if_ascii_letter(const std::string& tok) {
-    if (tok.size() == 1) {
-        return std::string(1, lower_ascii(tok[0]));
-    }
-    return tok; // não mexe em multibyte (acentos etc.)
+void LessonEngine::SkipCurrent() {
+    if (m_finished) return;
+    if (m_typed.size() >= m_target.size()) return;
+    // penaliza e avança
+    m_keystrokes++;
+    m_errors++;
+    m_typed.push_back(m_target[m_typed.size()]);
+    if (m_typed.size() == m_target.size()) m_finished = true;
 }
 
 void LessonEngine::PushText(const char* utf8) {
-    // Considera só o primeiro codepoint de 'utf8'
-    std::string tok;
-    utf8_for_each(utf8, [&](const std::string& t){
-        if (tok.empty()) tok = t;
+    if (m_finished) return;
+
+    utf8_for_each(utf8, [&](const std::string& tok){
+        if (m_finished) return;
+        m_keystrokes++;
+
+        if (m_typed.size() < m_target.size()) {
+            const std::string& expect = m_target[m_typed.size()];
+            if (equal_token(tok, expect)) {
+                m_typed.push_back(expect); // avança com o token esperado
+                if (m_typed.size() == m_target.size()) m_finished = true;
+            } else {
+                // erro não avança
+                m_errors++;
+            }
+        } else {
+            m_finished = true;
+        }
     });
-    if (tok.empty() || Finished()) return;
-
-    m_keystrokes++;
-
-    const size_t i = m_typed.size();
-    if (i >= m_target.size()) return;
-
-    const std::string& expect = m_target[i];
-
-    bool ok = false;
-    if (m_caseSensitive) {
-        ok = (tok == expect);
-    } else {
-        ok = (lower_if_ascii_letter(tok) == lower_if_ascii_letter(expect));
-    }
-
-    if (ok) {
-        m_typed.push_back(tok);
-    } else {
-        m_errors++;
-        // não avança na sequência
-    }
 }
 
 std::string LessonEngine::Sequence() const {
@@ -86,29 +111,4 @@ std::string LessonEngine::Typed() const {
     std::string s;
     for (auto& t : m_typed) s += t;
     return s;
-}
-
-std::string LessonEngine::CurrentGlyph() const {
-    if (Finished()) return "";
-    return m_target[m_typed.size()];
-}
-
-float LessonEngine::ProgressPercent() const {
-    if (m_target.empty()) return 0.f;
-    return 100.0f * float(m_typed.size()) / float(m_target.size());
-}
-
-float LessonEngine::Accuracy() const {
-    const int total = m_keystrokes;
-    if (total <= 0) return 100.f;
-    const int correct = total - m_errors;
-    return 100.0f * float(std::max(0, correct)) / float(total);
-}
-
-bool LessonEngine::Finished() const {
-    return !m_target.empty() && (m_typed.size() >= m_target.size());
-}
-
-void LessonEngine::SkipCurrent() {
-    if (Finished()) return;
 }

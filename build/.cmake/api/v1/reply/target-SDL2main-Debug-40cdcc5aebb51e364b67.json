@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "external/SDL/libSDL2maind.a"
+			"path" : "lib/libSDL2maind.a"
 		}
 	],
 	"backtrace" : 1,
@@ -13,11 +13,14 @@
 		[
 			"add_library",
 			"add_dependencies",
+			"add_compile_options",
+			"add_definitions",
 			"target_include_directories"
 		],
 		"files" : 
 		[
-			"external/SDL/CMakeLists.txt"
+			"external/SDL/CMakeLists.txt",
+			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -37,7 +40,22 @@
 				"parent" : 0
 			},
 			{
+				"file" : 1
+			},
+			{
 				"command" : 2,
+				"file" : 1,
+				"line" : 24,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 29,
+				"parent" : 3
+			},
+			{
+				"command" : 4,
 				"file" : 0,
 				"line" : 3396,
 				"parent" : 0
@@ -51,20 +69,43 @@
 			[
 				{
 					"fragment" : " -idirafter \"D:/digitacaoEFDR/external/SDL/src/video/khronos\"  -Wall -Wundef -fno-strict-aliasing -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs -mmmx -msse -msse2 -msse3  -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=33 -DSDL_BUILD_MICRO_VERSION=0 -g -gdwarf-4"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wpedantic"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wno-unused-parameter"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 5,
+					"define" : "NOMINMAX"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 6,
 					"path" : "D:/digitacaoEFDR/build/external/SDL/include-config-debug/SDL2"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 6,
 					"path" : "D:/digitacaoEFDR/build/external/SDL/include/SDL2"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 6,
 					"path" : "D:/digitacaoEFDR/build/external/SDL/include"
 				}
 			],

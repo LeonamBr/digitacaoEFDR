@@ -3,79 +3,101 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 #include <string>
-#include <vector>
-#include <cstdint>
-#include "../core/LessonEngine.h"
-#include "../ui/KeyboardView.h"
-
-namespace Lessons {
-    struct Lesson {
-        std::string title;
-        std::string text;   // sequência-alvo (UTF-8)
-    };
-
-    // Conteúdo inicial simples; você pode trocar/expandir à vontade.
-    inline const std::vector<Lesson>& All() {
-        static const std::vector<Lesson> k = {
-            {"Home row (mão esquerda)",  "asdf jklç"},
-            {"Acentos & ç",              "a á à ã â ç A Á À Ã Â Ç"},
-            {"Números",                  "123 456 789 0"},
-            {"Frase curta",              "Hoje é dia de treinar digitação!"}
-        };
-        return k;
-    }
-}
+#include "core/LessonEngine.h"
+#include "core/Lessons.h"
+#include "core/ProgressStore.h"
+#include "ui/KeyboardView.h"
 
 class App {
 public:
-    App() = default;
+    bool Init();            // cria janela, carrega fontes, entra no Main Menu
+    void Run();             // loop principal
+    void Shutdown();        // libera recursos
+    void EnterMainMenu();
+    void LeaveMainMenu();
+    bool LoadMenuAssets();
+    void UnloadMenuAssets();
 
-    // Dois inits: sem args (auto pela tela) e com (w,h) — o main pode chamar qualquer um.
-    bool Init();
-    bool Init(int w, int h);
-
-    void Shutdown();
-
+private:
+    // ===== fluxo base =====
     void HandleEvent(const SDL_Event& e);
     void Update(float dt);
     void Render();
 
-    bool Running() const { return m_running; }
+    // ===== telas =====
+    enum class EScreen { MainMenu, Lesson, Results, Exit };
+    void SwitchScreen(EScreen next);
 
-private:
-    // janela/render
+    // render/inputs por tela
+    void RenderMainMenu();
+    void RenderResults();
+
+    void HandleEventMainMenu(const SDL_Event& e);
+    void HandleEventLesson(const SDL_Event& e);
+    void HandleEventResults(const SDL_Event& e);
+
+    // ===== lições =====
+    void StartLesson(size_t index);
+    void NextLesson();
+    void PrevLesson();
+
+    // ===== util =====
+    void drawText(const std::string& txt, int x, int y, SDL_Color c = {230,230,235,255});
+    void DrawPauseOverlay();
+
+    static SDL_FRect Cover(const SDL_FRect& dst, float srcW, float srcH);
+    static SDL_FRect Fit(const SDL_FRect& dst, float srcW, float srcH);
+
+    // helpers locais
+    std::string MakeAssetPath(const std::string& relative) const;
+    void DrawTextureFullWindow(SDL_Texture* tex);
+
+    // ===== SDL =====
     SDL_Window*   m_window   = nullptr;
     SDL_Renderer* m_renderer = nullptr;
+    TTF_Font*     m_font     = nullptr; // UI/keys
+    TTF_Font*     m_fontLarge= nullptr; // títulos
+    SDL_Texture* m_menuBgTex = nullptr;
+    SDL_Texture* m_menuLogoTex = nullptr;
+    bool m_menuGfxReady = false;
 
-    // TTF
-    TTF_Font*     m_font     = nullptr;
-    std::string   m_fontPath;
-    bool          m_textInputOn = false;
+    SDL_Texture* m_menuBackground = nullptr; // bg do menu
+    bool m_imgOk = false;                    // guarda se IMG_Init foi ok
 
-    // estado do app
-    bool   m_running     = true;
-    bool   m_fullscreen  = false;
-    bool   m_showSummary = false;
+    // ===== estado global =====
+    int    m_width  = 1024;
+    int    m_height = 600;
+    bool   m_running = false;
 
-    // tempo e métricas
-    double m_nowSeconds  = 0.0;  // tempo absoluto do app (para animações)
-    int    m_elapsedMs   = 0;    // cronômetro da lição em ms (para HUD)
-    // Lições
-    size_t m_lessonIndex = 0;
+    // ===== estado de tela/menus =====
+    EScreen m_screen = EScreen::MainMenu;
+    bool   m_paused   = false; // só usado na Lesson
+    int    m_pauseSel = 0;     // seleção do pause overlay
+    int    m_menuSel  = 0;     // seleção do main menu
 
-    // componentes
+    // ===== input =====
+    bool   m_shiftHeld = false;
+
+    // ===== lição/engine/teclado =====
+    size_t       m_lessonIndex = 0;
     LessonEngine m_engine;
     KeyboardView m_kb;
 
-private:
-    bool InitInternal(int reqW, int reqH); // usado pelos dois Init()
-    void StartLesson(size_t index);
-    void ReloadFont(); // recarrega RobotoMono conforme altura do render
-    void ToggleFullscreen();
+    // ===== tempo =====
+    uint32_t m_prevTicks = 0;
+    float    m_elapsedSec = 0.0f; // cronômetro da lição
 
-    // helpers de desenho
-    void drawText(const std::string& s, int x, int y, SDL_Color c = {230,230,235,255});
+    // ===== progresso =====
+    ProgressStore m_store;
+
+    // ===== resultados =====
+    struct ResultsData {
+        int accuracy = 0;  // 0..100
+        int timeSec  = 0;
+        int stars    = 0;  // 0..3
+    } m_results;
 };
 
-#endif // APP_H
+#endif

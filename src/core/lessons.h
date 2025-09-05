@@ -1,29 +1,22 @@
-#ifndef CURSO_DIGITACAO_LESSONS_H
-#define CURSO_DIGITACAO_LESSONS_H
+#ifndef LESSONS_H
+#define LESSONS_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace Lessons {
 
 struct Lesson {
-    const char* name;
-    const char* seq;  // UTF-8
+    std::string title;
+    std::string text;   // sequência UTF-8 (o App usa .text.c_str())
 };
 
-inline const std::vector<Lesson>& All() {
-    static const std::vector<Lesson> k = {
-        { "Casa esquerda",          "asdf" },
-        { "Casa direita",           "jklç" },
-        { "Casas juntas",           "asdf jklç" },
-        { "Espaço e casas",         "asdf jklç asdf jklç" },
-        { "Palavrinhas 1",          "fala sala salsa" },
-        { "Palavrinhas 2",          "caca cala calça" }, 
-        { "Mão esquerda treino",    "aa ss dd ff as df" },
-        { "Mão direita treino",     "jj kk ll çç jk lç" }
-    };
-    return k;
-}
+// Carrega (uma única vez) de resources/lessons.json.
+// Se o arquivo não existir ou estiver inválido, volta um fallback de 5 lições.
+const std::vector<Lesson>& All();
+
+// (Opcional) Força recarregar do disco — útil se você editar o JSON em runtime.
+void Reload();
 
 } // namespace Lessons
 
